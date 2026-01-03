@@ -1,0 +1,48 @@
+college_name,state,sector,graduation_rate,sat_total,sat_imputed
+Angelo State University,TX,Public,34.0,950.0,0
+California State Univ. at Long Beach,CA,Public,48.0,838.0,0
+College of William and Mary,VA,Public,93.0,1240.0,0
+CUNY-Brooklyn College,NY,Public,43.0,916.0,0
+East Carolina University,NC,Public,58.0,921.0,0
+Illinois State University,IL,Public,54.0,961.0,1
+Metropolitan State College,CO,Public,25.0,855.0,0
+Montana State University,MT,Public,37.0,960.0,0
+North Adams State College,MA,Public,57.0,897.0,0
+Oakland University,MI,Public,53.0,996.0,1
+Ramapo College of New Jersey,NJ,Public,47.0,970.0,0
+United States Military Academy,NY,Public,95.0,1211.0,0
+University of Missouri at Rolla,MO,Public,49.0,1202.0,0
+University of North Florida,FL,Public,47.0,1017.0,0
+University of Southwestern Louisiana,LA,Public,30.0,855.0,1
+University of Wisconsin at Milwaukee,WI,Public,38.0,961.0,1
+Weber State University,UT,Public,38.0,925.0,1
+West Virginia University,WV,Public,57.0,946.0,0
+Western New Mexico University,NM,Public,47.0,785.0,1
+Wichita State University,KS,Public,32.0,926.0,1
+Adrian College,MI,Private,54.0,961.0,1
+Bennett College,NC,Private,44.0,780.0,0
+Boston University,MA,Private,72.0,1150.0,0
+California Institute of Technology,CA,Private,83.0,1410.0,0
+Centre College,KY,Private,74.0,1109.0,0
+Coker College,SC,Private,75.0,900.0,0
+Cornell College,IA,Private,64.0,1070.0,0
+David Lipscomb University,TN,Private,73.0,980.0,0
+Emory & Henry College,VA,Private,82.0,930.0,0
+Grove City College,PA,Private,100.0,1144.0,0
+Hillsdale College,MI,Private,79.0,1070.0,0
+Immaculata College,PA,Private,69.0,850.0,0
+John Brown University,AR,Private,75.0,993.0,0
+LeTourneau University,TX,Private,56.0,1043.0,0
+Loyola University,LA,Private,53.0,1050.0,0
+Mary Baldwin College,VA,Private,90.0,929.0,0
+Molloy College,NY,Private,80.0,903.0,0
+Mount St. Mary's College,CA,Private,72.0,972.0,0
+Phillips University,OK,Private,39.0,888.0,0
+Rose-Hulman Institute of Technology,IN,Private,97.0,1210.0,0
+Seton Hall University,NJ,Private,64.0,939.0,0
+Spring Hill College,AL,Private,70.0,1005.0,0
+Swarthmore College,PA,Private,95.0,1302.0,0
+Thiel College,PA,Private,60.0,862.0,0
+Union College,NY,Private,88.0,1171.0,1
+University of Dallas,TX,Private,63.0,1143.0,0
+University of Notre Dame,IN,Private,97.0,1220.0,0

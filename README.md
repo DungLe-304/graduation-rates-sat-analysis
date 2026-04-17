@@ -83,7 +83,8 @@ graduation-rates-sat-analysis/
 ├── docs/
 │   └── methodology.md          # Analysis methodology & write-up
 ├── figures/
-│   └── scatter_with_fits.png   # Main visualization
+│   ├── scatter_with_fits.png   # Main visualization
+│   └── diagnostics.png         # Visualization
 ├── notebooks/
 │   └── analysis.ipynb          # Full reproducible analysis
 ├── sql/

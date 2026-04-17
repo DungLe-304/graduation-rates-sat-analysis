@@ -1,107 +1,98 @@
-# Graduation Rates vs SAT: Public vs Private Colleges
+# Graduation Rates vs. SAT Scores — Public vs. Private Colleges
 
-![Python](https://img.shields.io/badge/Python-3.9+-3776AB?logo=python&logoColor=white)
-![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-F37626?logo=jupyter&logoColor=white)
-![SQL](https://img.shields.io/badge/SQL-SQLite%20%7C%20MySQL%20%7C%20Postgres-4479A1?logo=postgresql&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-22c55e)
-![Status](https://img.shields.io/badge/Status-Complete-22c55e)
+![Python](https://img.shields.io/badge/Python-3.9%2B-blue?logo=python)
+![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-orange?logo=jupyter)
+![SQL](https://img.shields.io/badge/SQL-SQLite%20%7C%20PostgreSQL-lightgrey?logo=postgresql)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
 
-Statistical analysis exploring how SAT scores relate to graduation rates, with a comparison between public and private institutions. Originally a case study at Truman State University, extended with Python automation and SQL data loading.
-
----
-
-## 📌 Overview
-
-Using a dataset of **47 U.S. colleges** (20 public, 27 private), this project investigates:
-
-- How strongly do SAT scores predict graduation rates?
-- Does this relationship differ between public and private institutions?
-- How well does the model predict Truman State University's own graduation rate?
-
-The analysis includes exploratory data analysis (EDA), separate OLS regressions by sector, and an ANCOVA-style model with an interaction term.
+An end-to-end statistical analysis pipeline examining the relationship between SAT scores and graduation rates across 47 U.S. colleges, segmented by institutional sector (public vs. private). The project covers data cleaning, exploratory analysis, OLS regression modeling, ANCOVA-style interaction testing, and SQL-based data exploration.
 
 ---
 
-## 🎯 Key Findings
+## 🎯 Research Question
 
-### Correlations (SAT vs. Graduation Rate)
+> **Does the relationship between SAT scores and graduation rates differ significantly between public and private institutions?**
 
-| Sector  | r     | p-value   | Interpretation             |
-|---------|-------|-----------|----------------------------|
-| Public  | 0.701 | 0.000574  | Strong positive correlation |
-| Private | 0.572 | 0.001805  | Moderate positive correlation |
+---
 
-### Separate OLS Regressions
+## 🔑 Key Findings
 
-| Sector  | Intercept | Slope (per SAT point) | Equation |
-|---------|-----------|-----------------------|----------|
-| Public  | −51.385   | 0.1040                | `grad_rate = -51.385 + 0.104 × sat_total` |
-| Private | 8.939     | 0.0617                | `grad_rate = 8.939 + 0.062 × sat_total`   |
+### Correlation (SAT Total vs. Graduation Rate)
 
-Public colleges show a steeper slope, suggesting SAT scores are more predictive of graduation rates in that sector.
+| Sector | r | p-value | Interpretation |
+|--------|---|---------|----------------|
+| Public | 0.701 | 0.0006 | Strong, highly significant |
+| Private | 0.572 | 0.0018 | Moderate, significant |
 
-### Truman State University Prediction (SAT ≈ 1190)
+Both sectors show a statistically significant positive correlation, but the relationship is stronger among public institutions.
 
-| Predicted | Actual | Residual |
-|-----------|--------|----------|
-| 72.3%     | 76.0%  | +3.7 pp  |
+### OLS Regression Models
 
-The model slightly underpredicts Truman's graduation rate, which is consistent with the university performing above expectation for its SAT profile.
+| Sector | Intercept | Slope (per SAT point) |
+|--------|-----------|-----------------------|
+| Public | −51.39 | +0.1040 |
+| Private | +8.94 | +0.0617 |
 
-### ANCOVA-Style Interaction Model
+Public colleges show a steeper slope: each additional SAT point associates with a larger gain in graduation rate compared to private colleges.
 
-```
-graduation_rate ~ sat_total * sector
-```
+### Interaction Test (ANCOVA-style)
 
-The interaction term (slope difference between sectors) yielded **p = 0.175**, indicating **no statistically significant difference** in the SAT–graduation rate slope between public and private institutions at α = 0.05. Despite the visual difference in slopes, we lack sufficient evidence to conclude the relationship fundamentally differs by sector.
+Model: `graduation_rate ~ sat_total * sector`
+
+The interaction term (slope difference between sectors) yielded **p = 0.175**, indicating the difference in slopes is **not statistically significant** at α = 0.05. While descriptive differences exist, we cannot reject the null hypothesis of equal slopes.
 
 ---
 
 ## 📦 Data
 
-- **Source:** Adapted from a course dataset, Statistics Department, Truman State University
-- **Raw:** `data/GradRates.xlsx`
-- **Cleaned:** `data/grad_rates_clean.csv`
-- **SQL seed:** `sql/grad_rates.sql` (CREATE TABLE + INSERT statements)
+| File | Description |
+|------|-------------|
+| `data/GradRates.xlsx` | Raw dataset (47 colleges) |
+| `data/grad_rates_clean.csv` | Cleaned, analysis-ready CSV |
+| `sql/grad_rates.sql` | SQL seed file (CREATE TABLE + INSERT) |
 
-### Variables
+**Schema:**
 
-| Column          | Type    | Description                                      |
-|-----------------|---------|--------------------------------------------------|
-| `sector`        | String  | `Public` or `Private`                            |
-| `graduation_rate` | Float | Graduation rate (%)                              |
-| `sat_total`     | Int     | SAT Math + Verbal combined score                 |
-| `sat_imputed`   | Binary  | `1` if SAT was imputed from ACT (marked `*` in raw data) |
+| Column | Type | Description |
+|--------|------|-------------|
+| `sector` | TEXT | `Public` or `Private` |
+| `graduation_rate` | REAL | 6-year graduation rate (%) |
+| `sat_total` | INTEGER | SAT Math + Verbal combined score |
+| `sat_imputed` | INTEGER | `1` = SAT was estimated from ACT conversion |
+
+> **Note on imputation:** 5 colleges reported ACT scores only. SAT equivalents were estimated using published concordance tables. A sensitivity analysis excluding imputed records is included in the notebook and yields consistent results.
 
 ---
 
 ## 📊 Figures
 
-![Scatter with regression fits](figures/scatter_with_fits.png)
+**Scatter plot with sector-specific regression fits:**
 
-*Separate OLS regression lines for public (blue) and private (orange) colleges. Both sectors show a positive relationship, with public colleges displaying a steeper slope.*
+![Scatter with regression fits](figures/scatter_with_fits.png)
 
 ---
 
-## 🧱 Repo Structure
+## 🗂️ Repository Structure
 
 ```
 graduation-rates-sat-analysis/
 ├── data/
-│   ├── GradRates.xlsx          # Raw dataset
-│   └── grad_rates_clean.csv    # Cleaned, analysis-ready data
+│   ├── GradRates.xlsx          # Raw data
+│   └── grad_rates_clean.csv    # Cleaned data
+├── docs/
+│   └── methodology.md          # Analysis methodology & write-up
 ├── figures/
-│   └── scatter_with_fits.png   # Scatter plot with regression lines
+│   └── scatter_with_fits.png   # Main visualization
 ├── notebooks/
-│   └── analysis.ipynb          # Full reproducible analysis (EDA → regression → diagnostics)
-├── reports/
-│   └── assignment.pdf          # Original case study prompt + write-up
+│   └── analysis.ipynb          # Full reproducible analysis
 ├── sql/
-│   └── grad_rates.sql          # SQL seed file (auto-generated)
+│   ├── grad_rates.sql          # Seed file (schema + data)
+│   └── analysis_queries.sql    # Analytical SQL queries
 ├── src/
-│   └── generate_sql.py         # Converts Excel/CSV to SQL seed
+│   └── generate_sql.py         # Script: Excel → SQL seed
 ├── .gitignore
+├── LICENSE
 ├── README.md
 └── requirements.txt
 ```
@@ -113,51 +104,61 @@ graduation-rates-sat-analysis/
 ### Prerequisites
 
 - Python 3.9+
-- `pip` and `venv`
+- Jupyter Lab
 
 ### Setup
 
 ```bash
-# 1. Clone the repo
+# Clone the repo
 git clone https://github.com/DungLe-304/graduation-rates-sat-analysis.git
 cd graduation-rates-sat-analysis
 
-# 2. Create and activate a virtual environment
+# Create and activate virtual environment
 python3 -m venv .venv
-source .venv/bin/activate       # Windows: .venv\Scripts\activate
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
 
-# 3. Install dependencies
+# Install dependencies
 pip install -r requirements.txt
 
-# 4. (Optional) Regenerate the SQL seed file
+# (Optional) Regenerate the SQL seed file from source data
 python3 src/generate_sql.py
 
-# 5. Launch the notebook
+# Launch the analysis notebook
 jupyter lab
 ```
 
-Open `notebooks/analysis.ipynb` and run all cells to reproduce the full analysis.
+Then open `notebooks/analysis.ipynb` and run all cells.
 
 ---
 
-## ⚠️ Limitations
+## 🧱 SQL Layer
 
-- **Small sample (n = 47):** Results may not generalize broadly to all U.S. colleges.
-- **Imputed SAT values:** Some SAT scores were estimated from ACT scores (flagged by `sat_imputed = 1`), which may introduce measurement error.
-- **Observational data:** Correlations and regressions do not imply causation — other institutional factors (funding, selectivity, support services) likely influence graduation rates.
-- **Single year snapshot:** No longitudinal component; trends over time are not captured.
+The `sql/` directory provides two files for database-oriented exploration:
+
+- **`grad_rates.sql`** — Creates the `grad_rates` table and seeds all 47 records
+- **`analysis_queries.sql`** — Ready-to-run analytical queries (sector averages, top performers, SAT bands, imputation sensitivity)
+
+Compatible with SQLite, PostgreSQL, and MySQL.
 
 ---
 
 ## 🔭 Future Work
 
-- Expand dataset to include more institutions and additional years
-- Incorporate additional predictors (acceptance rate, endowment, student-to-faculty ratio)
-- Apply regularization techniques (Ridge/Lasso) to manage multicollinearity
-- Build an interactive dashboard for exploring institution-level predictions
+- **Scale to 500+ institutions** using the [IPEDS API](https://nces.ed.gov/ipeds/) for nationally representative analysis
+- **Expand feature set** — endowment per student, student-to-faculty ratio, admission rate, Pell grant percentage
+- **Compare across years** — longitudinal analysis to detect trends (2010–2023)
+- **Prediction API** — wrap the regression model in a lightweight FastAPI endpoint
+- **Classification framing** — predict whether a college exceeds the national median graduation rate
 
 ---
 
 ## 📄 License
 
 This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## 👤 Author
+
+**Tony Le** — Data Science, Truman State University  
+[GitHub](https://github.com/DungLe-304) · [LinkedIn](https://www.linkedin.com/in/dung-le-data304/)
